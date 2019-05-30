@@ -1,0 +1,72 @@
+﻿@using MyEvernote.Entities
+@model List<Note>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            @foreach (Note note in Model)
+            {
+                <div class="col-sm-12 col-lg-12 col-md-12" data-note-id="@note.Id">
+                    <div class="job-list">
+                        <div class="job-list-content" style="margin-left: 5px;">
+                            <h4>
+                                <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id">
+                                    @note.Title
+                                </a>
+                            </h4>
+
+                            @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 200)
+                            {
+                                <p>@(note.Text.Substring(0, 200) + "...")</p>
+                            }
+                            else
+                            {
+                                <p>@note.Text</p>
+                            }
+
+                            <div class="job-tag">
+                                <div class="pull-left">
+                                    <div class="meta-tag">
+                                        @note.Owner.Username <span class="glyphicon glyphicon-user"></span>
+                                        @note.ModifiedOn.ToString("dd.MM.yy HH:mm") <span class="glyphicon glyphicon-time"></span>
+                                    </div>
+                                </div>
+                                <div class="ratings pull-right">
+
+                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal_comment" data-note-id="@note.Id">
+                                        <span class="glyphicon glyphicon-comment"></span> Yorumlar
+                                    </button>
+
+                                    <button class="btn btn-default btn-sm" type="button" data-liked="false" data-note-id="@note.Id">
+                                        <span class="glyphicon glyphicon-star-empty like-star"></span>&nbsp;
+                                        <span class="like-count">@note.LikeCount</span>
+                                    </button>
+
+                                    <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id" class="btn btn-default btn-sm">devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+@section footer{
+    @Html.Partial("_PartialFooter")
+}
+@Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
+@Bootstrap.ModalPopup(id: "modal_notedetail", title: "Entry Detayı")
+<script src="~/Scripts/comment.js"></script>
+<script src="~/Scripts/like.js"></script>
+<script src="~/Scripts/NoteDetailPopup.js"></script>

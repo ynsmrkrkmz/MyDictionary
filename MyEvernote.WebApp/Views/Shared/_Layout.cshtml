@@ -1,0 +1,186 @@
+﻿@using MyEvernote.WebApp
+@using MyEvernote.Entities
+@using MyEvernote.WebApp.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Yunus Emre KORKMAZ">
+    <meta name="author" content="Yunus Emre KORKMAZ">
+    <title>MyDictionary Sample</title>
+
+
+    <link rel="shortcut icon" href="~/Images/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/jasny-bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/bootstrap-select.min.css" type="text/css">
+    <!-- Material CSS -->
+    <link rel="stylesheet" href="~/Content/material-kit.css" type="text/css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Content/themify-icons.css">
+
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="~/Content/animate.css" type="text/css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/Content/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/owl.theme.css" type="text/css">
+    <!-- Rev Slider CSS -->
+    <link rel="stylesheet" href="~/Content/settings.css" type="text/css">
+    <!-- Slicknav js -->
+    <link rel="stylesheet" href="~/Content/slicknav.css" type="text/css">
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="~/Content/main.css" type="text/css">
+    <!-- Responsive CSS Styles -->
+    <link rel="stylesheet" href="~/Content/responsive.css" type="text/css">
+
+    <!-- Color CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="~/Content/red.css" media="screen" />
+
+    <script type="text/javascript" src="~/Scripts/jquery-min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/material.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/material-kit.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.parallax.js"></script>
+    <script type="text/javascript" src="~/Scripts/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.slicknav.js"></script>
+    <script type="text/javascript" src="~/Scripts/main.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/waypoints.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jasny-bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/form-validator.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/contact-form-script.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!-- Header Section Start -->
+    <div class="header">
+        <!-- Start intro section -->
+        <section id="intro" class="section-intro">
+            <div class="logo-menu">
+                <nav class="navbar navbar-default" role="navigation" data-spy="affix" data-offset-top="50">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand logo" href="index.html"><img src="assets/img/logo.png" alt=""></a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="navbar">
+                            <!-- Start Navigation List -->
+
+                            <ul class="nav navbar-nav">
+                                @if (CurrentSession.User != null)
+                                {
+                                    <li>
+                                        <a href="/Note/MyNotes" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-wrench"></span> Yönetim <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                @Bootstrap.LinkMenu("/Note/Create", "plus", " Entry Ekle")
+                                            </li>
+                                            <li>
+                                                @Bootstrap.LinkMenu("/Note/Index", "th-list", " Entrylerim")
+                                            </li>
+                                            <li>
+                                                @Bootstrap.LinkMenu("/Note/MyLikedNotes", "heart", " Beğendiklerim")
+                                            </li>
+
+                                            @if (CurrentSession.User.IsAdmin)
+                                            {
+                                                <li role="separator" class="divider"></li>
+                                                <li>
+                                                    @Bootstrap.LinkMenu("/Category/Create", "plus", " Kategori Ekle")
+                                                </li>
+                                                <li>
+                                                    @Bootstrap.LinkMenu("/Category/Index", "th-list", " Kategoriler")
+                                                </li>
+
+                                                <li role="separator" class="divider"></li>
+                                                <li>
+                                                    @Bootstrap.LinkMenu("/EvernoteUser/Create", "plus", " Kullanıcı Ekle")
+                                                </li>
+                                                <li>
+                                                    @Bootstrap.LinkMenu("/EvernoteUser/Index", "th-list", " Kullanıcılar")
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                <li>
+                                    @Bootstrap.LinkMenu("/Home/MostLiked", "star", " En Beğenilenler")
+                                </li>
+                                <li>
+                                    @Bootstrap.LinkMenu("/Home/Index", "th-list", " Son Yazılar")
+                                </li>
+                                <li>
+                                    @Bootstrap.LinkMenu("/Home/About", "info-sign", " Hakkımızda")
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <b>Version : @(System.Reflection.Assembly.GetAssembly(typeof(MvcApplication))?.GetName().Version.ToString())</b>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                @if (CurrentSession.User == null)
+                                {
+                                    <li class="right">@Bootstrap.LinkMenu("/Home/Login", "log-in", " Giriş")</li>
+                                    <li class="left">@Bootstrap.LinkMenu("/Home/Register", "user", " Üye Ol")</li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/Home/ShowProfile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-user"></span> @CurrentSession.User.Username <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li style="color: dimgrey">
+                                                @Bootstrap.LinkMenu("/Home/ShowProfile", "user", " Profili Göster")
+                                            </li>
+                                            <li style="color: dimgrey">
+                                                @Bootstrap.LinkMenu("/Home/EditProfile", "edit", " Profili Düzenle")
+                                            </li>
+                                            <li style="color: dimgrey">
+                                                <a href="/Home/DeleteProfile" onclick="return confirm('Hesabınızı silmek istediğinize emin misiniz?');">
+                                                    <span class="glyphicon glyphicon-trash"> </span> Profili Sil
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>@Bootstrap.LinkMenu("/Home/Logout", "log-out", " Çıkış")</li>
+
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                    
+                </nav>
+            </div>
+            <!-- Header Section End -->
+    </div>
+
+    @RenderBody()
+
+    @RenderSection("footer", required: false)
+
+</body>
+</html>
